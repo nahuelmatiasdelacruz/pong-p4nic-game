@@ -1,14 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
     [SerializeField] MatchConfigSO matchConfig;
+    private Vector3 initialBallPosition;
     private Rigidbody2D rb;
     private float currentSpeed;
     private bool isActive = false;
 
     private void Awake()
     {
+        initialBallPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
         currentSpeed = matchConfig.InitialSpeed;
     }
@@ -18,8 +21,16 @@ public class BallController : MonoBehaviour
         LaunchBall();
     }
 
+    public IEnumerator ResetBallPosition()
+    {
+        isActive = false;
+        transform.position = initialBallPosition;
+        yield return new WaitForSeconds(2f);
+        LaunchBall();
+    }
     private void LaunchBall()
     {
+        isActive = true;
         float randomAngle = Random.Range(-matchConfig.MaxAngle, matchConfig.MaxAngle) * Mathf.Deg2Rad;
         int randomHorizontalDir = Random.Range(0, 2) == 0 ? -1 : 1;
 
@@ -32,19 +43,7 @@ public class BallController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
-        {
-            //OnHitWall();
-        }
-        else if (collision.gameObject.CompareTag("Paddle"))
-        {
-            OnHitPaddle();
-        }
-    }
-
-    private void OnHitPaddle()
-    {
-
+        
     }
 }
 
