@@ -16,19 +16,11 @@ public class BallController : MonoBehaviour
         currentSpeed = matchConfig.InitialSpeed;
     }
 
-    private void Start()
+    public void ResetBallPosition()
     {
-        LaunchBall();
-    }
-
-    public IEnumerator ResetBallPosition()
-    {
-        isActive = false;
         transform.position = initialBallPosition;
-        yield return new WaitForSeconds(2f);
-        LaunchBall();
     }
-    private void LaunchBall()
+    public void LaunchBall()
     {
         isActive = true;
         float randomAngle = Random.Range(-matchConfig.MaxAngle, matchConfig.MaxAngle) * Mathf.Deg2Rad;
@@ -39,6 +31,11 @@ public class BallController : MonoBehaviour
 
         Vector2 direction = new Vector2(xComponent, yComponent).normalized;
         rb.linearVelocity = direction * currentSpeed;
+    }
+
+    public void DisableBall()
+    {
+        isActive = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

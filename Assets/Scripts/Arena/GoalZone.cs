@@ -1,16 +1,17 @@
+using System;
 using UnityEngine;
 
 public class GoalZone : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private bool isPlayerOne;
 
-    // Update is called once per frame
-    void Update()
+    public event Action<bool> OnGoal;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            OnGoal?.Invoke(isPlayerOne);
+        }
     }
 }
