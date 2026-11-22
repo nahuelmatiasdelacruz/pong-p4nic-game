@@ -9,9 +9,6 @@ public class GoalZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Ball"))
-        {
-            OnGoal?.Invoke(isPlayerOne);
-        }
+        if (collision.gameObject.CompareTag("Ball")) OnGoal?.Invoke(isPlayerOne);
     }
 }

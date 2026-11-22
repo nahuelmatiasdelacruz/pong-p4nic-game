@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class PauseUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private MatchController matchController;
+
+    private void Awake()
     {
-        
+        matchController.OnMatchPaused += OnGamePaused;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnGamePaused()
     {
         
     }
