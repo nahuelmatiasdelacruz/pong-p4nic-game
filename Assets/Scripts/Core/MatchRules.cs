@@ -19,10 +19,18 @@ public class MatchRules
         if (isPlayerOne)
         {
             playerOneGoals++;
+            if(playerOneGoals >= targetGoals)
+            {
+                SetWinner(isPlayerOne);
+            }
         }
         else
         {
             playerTwoGoals++;
+            if(playerTwoGoals >= targetGoals)
+            {
+                SetWinner(isPlayerOne);
+            }
         }
     }
 

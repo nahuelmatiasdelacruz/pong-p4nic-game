@@ -29,7 +29,7 @@ public class MatchController : MonoBehaviour
 
     private void OnEnable()
     {
-        inputSystem.UI.Pause.performed += OnGamePaused;
+        inputSystem.UI.Pause.performed += OnPausePressed;
         inputSystem.UI.Enable();
     }
 
@@ -43,16 +43,29 @@ public class MatchController : MonoBehaviour
         StartCoroutine(StartGame());
     }
 
-    private void OnGamePaused(InputAction.CallbackContext ctx)
+    private void OnPausePressed(InputAction.CallbackContext ctx)
     {
-        matchState = MatchState.Paused;
-        Debug.Log("Pausa!");
-        Time.timeScale = 0f;
+        if(matchState == MatchState.Playing)
+        {
+            matchState = MatchState.Paused;
+            Time.timeScale = 0f;
+        }else if(matchState == MatchState.Paused)
+        {
+            matchState = MatchState.Playing;
+            Time.timeScale = 1f;
+        }
     }
 
     private void OnGoal(bool isPlayerOne)
     {
         matchRules.AddPlayerGoal(isPlayerOne);
+        OnScoreChanged?.Invoke();
+        if(matchRules.Winner != null)
+        {
+            matchState = MatchState.GameOver;
+            OnMatchEnded?.Invoke();
+            ballController.ResetBallPosition();
+        }
     }
 
     private IEnumerator StartGame()

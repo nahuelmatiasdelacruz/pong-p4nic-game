@@ -18,6 +18,7 @@ public class BallController : MonoBehaviour
 
     public void ResetBallPosition()
     {
+        isActive = false;
         transform.position = initialBallPosition;
     }
     public void LaunchBall()

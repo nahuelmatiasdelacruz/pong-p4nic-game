@@ -12,6 +12,7 @@ public class PaddleMotor : MonoBehaviour
     private float paddleHalfSize;
     private float maxY;
     private float minY;
+    private Vector2 paddleInitialPosition;
     private IPaddleInput paddleInput;
     private Rigidbody2D rb;
     
@@ -23,6 +24,7 @@ public class PaddleMotor : MonoBehaviour
     }
     private void Start()
     {
+        paddleInitialPosition = transform.position;
         topWallLowerPosition = topWallCollider.bounds.min.y;
         bottomWallUpperPosition = bottomWallCollider.bounds.max.y;
         paddleHalfSize = paddleCollider.bounds.extents.y;
@@ -48,4 +50,7 @@ public class PaddleMotor : MonoBehaviour
         Vector2 finalPosition = new Vector2(paddlePositionX,finalYposition);
         rb.MovePosition(finalPosition);
     }
+
+    public void ResetPaddlePosition() => transform.position = paddleInitialPosition;
+
 }
